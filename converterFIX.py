@@ -31,11 +31,14 @@ image = Image.open(sys.argv[1])
 n_frames, width, height = image.n_frames if hasattr(image, 'n_frames') else 1, image.width, image.height
 
 used_frames = int( min((n_frames - start_at_frame) / skip_frames, lim_frames))
-print(used_frames)
 used_width = min(length_x, image.width)
 used_height = min(length_y, image.height)
 
+print("#",sys.argv[1])
 for frame_no in range(start_at_frame, start_at_frame + used_frames):
+    image = Image.open(sys.argv[1])
+    n_frames, width, height = image.n_frames if hasattr(image, 'n_frames') else 1, image.width, image.height
+    
     image.seek(frame_no)
     frame = list(image.convert('RGBA').getdata())
     cut_frame = []
@@ -54,4 +57,7 @@ else:
     print('rgb.gif([0x' +
           ', 0x'.join([', 0x'.join([format(r << 24 | g << 16 | b << 8 | a, '08x') for r, g, b, a in frame]) for frame in
                        frames]) +
-          '], %d, %d, %d, %d, %d)' % ((0, 0), (used_width, used_height), used_frames))
+          '], (%d, %d),( %d, %d), %d)' % (0, 0, used_width, used_height, used_frames))
+        
+    print("time.sleep(3)")
+    print("rgb.clear()")

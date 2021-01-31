@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys
+import sys ,time
 from PIL import Image
 import argparse
 
@@ -34,24 +34,30 @@ used_frames = int(min((n_frames - start_at_frame) / skip_frames, lim_frames))
 used_width = min(length_x, image.width)
 used_height = min(length_y, image.height)
 
-for frame_no in range(start_at_frame, start_at_frame + used_frames):
+for frame_no in range(0,4):
+
+    frames = []
+    image = Image.open(sys.argv[1])
+    n_frames, width, height = image.n_frames if hasattr(image, 'n_frames') else 1, image.width, image.height
     image.seek(frame_no)
+    #time.sleep(2)
     frame = list(image.convert('RGBA').getdata())
+    frames = []
     cut_frame = []
     for y in range(start_y, start_y + used_height):
         for x in range(start_x, start_x + used_width):
             cut_frame.append(frame[x + width * y])
+    
+    #print("frame number:",frame_no,":", cut_frame)
 
     frames.append(cut_frame)
 
+    #print(frames)
 
-if is_icon:
-    print('icon = ([0x' +
-          ', 0x'.join([', 0x'.join([format(r << 24 | g << 16 | b << 8 | a, '08x') for r, g, b, a in frame]) for frame in
-                       frames]) +
-          '], %d)' % used_frames)
-else:
-    print('rgb.gif([0x' +
-          ', 0x'.join([', 0x'.join([format(r << 24 | g << 16 | b << 8 | a, '08x') for r, g, b, a in frame]) for frame in
-                       frames]) +
-          '],( %d, %d), %d)' % (used_width, used_height, used_frames))
+    if is_icon:
+        print('icon = ([0x' +', 0x'.join([', 0x'.join([format(r << 24 | g << 16 | b << 8 | a, '08x') for r, g, b, a in frame]) for frame in frames]) +'])')
+    else:
+        print('rgb.gif([0x' +', 0x'.join([', 0x'.join([format(r << 24 | g << 16 | b << 8 | a, '08x') for r, g, b, a in frame]) for frame in frames]) + '],(0,0),( %d, %d), %d)' % (used_width, used_height, 1))
+        print("time.sleep(1)")
+        print("rgb.clear()")
+image.show()
