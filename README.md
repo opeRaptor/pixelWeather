@@ -1,11 +1,11 @@
 # pixelWeather
-Live weather/astro information for the[Pixel badge](https://pixel.curious.supplies/) written in microPython
-
-Fully animated weather conditions~
+Live weather/astro information for the [Pixel badge](https://pixel.curious.supplies/) written in microPython
 
 No configuration needed! Location and timezone automatically set using IP geolocation
 
-At sunset, moonphase replaces current condition.
+⛅️Fully animated weather conditions⛈
+
+🌘At sunset, moonphase replaces current condition.🌒
 
 Hatchery link: https://badge.team/projects/pixelWeather/
 
