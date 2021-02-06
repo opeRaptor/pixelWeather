@@ -57,4 +57,4 @@ else:
     print('rgb.gif([0x' +
           ', 0x'.join([', 0x'.join([format(r << 24 | g << 16 | b << 8 | a, '08x') for r, g, b, a in frame]) for frame in
                        frames]) +
-          '], (x, y),( %d, %d), %d)' % (used_width, used_height, used_frames))
+          '], (0, 0),( %d, %d), %d)' % (used_width, used_height, used_frames))
