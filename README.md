@@ -24,4 +24,4 @@ wifi.wait()
 woezel.install("pixelWeather")
 machine.reset()
 ```
-![pixelWeather](https://github.com/opeRaptor/pixelWeather/blob/main/images/pixelWeather.jpg)
+![pixelWeather](https://github.com/opeRaptor/pixelWeather/blob/main/images/animated.gif)

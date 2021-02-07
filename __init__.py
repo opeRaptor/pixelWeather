@@ -1,5 +1,5 @@
 try:
-    import time, rgb, wifi, system, urequests, machine,virtualtimers,gc
+    import time, rgb, wifi, urequests, machine,virtualtimers,gc
     from default_icons import animation_connecting_wifi, icon_no_wifi
     #https://github.com/badgeteam/ESP32-platform-firmware/blob/cdc6e4bd0759a58f8fe2310efd41775060a456c5/firmware/python_modules/campzone2019/default_icons.py
 
@@ -136,6 +136,7 @@ try:
                 # Hope it won't 500 a little later
                 print("Bad response")
                 time.sleep(5)
+                continue
 
         wttrin = wttrinAPI.text
         wttrin = wttrin[1:-1] # strip "" of string
@@ -180,6 +181,7 @@ try:
                 # Hope it won't 500 a little later
                 print("Bad response")
                 time.sleep(5)
+                continue
         result = request.json()
         
         request.close()
