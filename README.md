@@ -36,5 +36,5 @@ To go back to automatic IP based geolocalisation
 ```python
 import valuestore
 valuestore.save('pixelWeather', 'settings', {"localisation":""})
-
+```
 ![pixelWeather](https://github.com/opeRaptor/pixelWeather/blob/main/images/animated.gif)
