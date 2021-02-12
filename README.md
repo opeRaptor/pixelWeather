@@ -24,4 +24,17 @@ wifi.wait()
 woezel.install("pixelWeather")
 machine.reset()
 ```
+## Specify your location manually: ##
+You can specify your location manually by saving your nearest city name in flash
+
+To verify it with the API go to:http://wttr.in/CITYNAMEHERE
+```python
+import valuestore
+valuestore.save('pixelWeather', 'settings', {"localisation":"CITYNAMEHERE"})
+```
+To go back to automatic IP based geolocalisation
+```python
+import valuestore
+valuestore.save('pixelWeather', 'settings', {"localisation":""})
+
 ![pixelWeather](https://github.com/opeRaptor/pixelWeather/blob/main/images/animated.gif)
