@@ -278,11 +278,24 @@ def refresh():
     print("sunset:",sunset)
     
     rgb.clear()
-
-    if sunrise < timeNow and timeNow < sunset: #It is daytime
-        condition(weather[4],23,0) #should implement dynamic postion depending on width of gif
-    else:
-        moonphase(weather[3],23,0)
+    
+    #import valuestore
+    #valuestore.save('pixelWeather', 'settings', {"showMoon": False}) #Use this to keep showing current weather condition aftersunset
+    try:
+        settings = valuestore.load('pixelWeather', 'settings')
+        if settings['showMoon'] == "":
+            raise Exception
+        elif settings['showMoon'] == True:
+            moonphase(weather[3],23,0)
+        elif settings['showMoon'] == False:
+            condition(weather[4],23,0)
+        else:
+            raise Exception
+    except:
+        if sunrise < timeNow and timeNow < sunset: #It is daytime
+            condition(weather[4],23,0) #should implement dynamic postion depending on width of gif
+        else:
+            moonphase(weather[3],23,0)
 
     output = "{}".format(weather[0])+"C"    
     
