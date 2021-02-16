@@ -236,33 +236,30 @@ def setTime():
 def wifiConnect():
     while not wifi.status():
         print("Connecting to WiFi")
-        #rgb.setfont(rgb.FONT_6x3)
-        #trietext = "Try: {}".format(tries)
-        #print(trietext)
-        #rgb.text(trietext, (50, 50, 50), (0, 0))
-        #time.sleep(1)
         data, size, frames = animation_connecting_wifi
         rgb.clear()
         rgb.framerate(3)
         rgb.gif(data, (12, 0), size, frames)
+        
         wifi.connect()
         if wifi.wait():
             rgb.clear()
             rgb.framerate(20)
+            print("WiFi Connected!")
+            time.sleep(1)
+            setTime()
+            break
         else:
             msg = "No wifi"
             print(msg)
-            # rgb.scrolltext(msg, (50, 50, 50), (0, 0))
-            # time.sleep(5)
             rgb.clear()
             rgb.framerate(20)
             data, frames = icon_no_wifi
             rgb.image(data, (12, 0), (8,8))
             time.sleep(3)
             rgb.clear()
-        print("WiFi Connected!")
-        time.sleep(1)
-        setTime()
+            continue
+
 
 def refresh():
     wifiConnect()
@@ -280,7 +277,7 @@ def refresh():
     rgb.clear()
     
     #import valuestore
-    #valuestore.save('pixelWeather', 'settings', {"showMoon": False}) #Use this to keep showing current weather condition aftersunset
+    #qq #Use this to keep showing current weather condition aftersunset
     try:
         settings = valuestore.load('pixelWeather', 'settings')
         if settings['showMoon'] == "":
@@ -297,7 +294,7 @@ def refresh():
         else:
             moonphase(weather[3],23,0)
 
-    output = "{}".format(weather[0])+"C"    
+    output = "{}".format(weather[0])+"\u00B0" #adding degree sign, thanks Tom~
     
     color= mapToHSV(weather[0])
     rgb.text(output, color, (0, 1))
