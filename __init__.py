@@ -98,6 +98,7 @@ def condition(emoji,x,y):
     img, pos, size, frames = data
     rgb.gif(img,(x,y), size, frames)
     del data
+    gc.collect()
         
 def mapToHSV(value):   
     #https://stackoverflow.com/questions/1969240/mapping-a-range-of-values-to-another/1969274
@@ -153,10 +154,10 @@ def wttrin():
                 raise Exception
             else:
                 print("Using manual localisation:"+ str(settings['localisation']))
-                wttrinAPI = 'http://wttr.in/{}?format="%t+%S+%s+%m+%c+%l"'.format(settings['localisation'])
+                wttrinAPI = 'http://wttr.in/{}?format="%t+%S+%s+%m+%c+%l+%T"'.format(settings['localisation'])
         except:
             print("Using IP based localisation")
-            wttrinAPI = 'http://wttr.in/?format="%t+%S+%s+%m+%c+%l"'
+            wttrinAPI = 'http://wttr.in/?format="%t+%S+%s+%m+%c+%l+%T"'
         
         wttrinAPI = urequests.get(wttrinAPI)
         print("wttr.in HTTP request status Code:",wttrinAPI.status_code)
@@ -178,6 +179,7 @@ def wttrin():
     gc.collect()
 
     chunks = wttrin.split(' ')
+
     print("Chunks:",chunks)
 
     temp = chunks[0]
@@ -200,7 +202,6 @@ def setTime():
     rtc = machine.RTC()
     print("Time before:",rtc.datetime())
 
-    
     while True:
         worldTimeAPI = "http://worldtimeapi.org/api/ip"
         request = urequests.get(worldTimeAPI)
@@ -232,6 +233,7 @@ def setTime():
     print("Time   now:",rtc.now())
     print("Local time:",time.localtime())
     print("GMT   time:",time.gmtime())
+
 
 def wifiConnect():
     while not wifi.status():
@@ -276,6 +278,11 @@ def refresh():
     
     rgb.clear()
     
+    output = "{}".format(weather[0])+"\u00B0" #adding degree sign, thanks Tom~
+    
+    color= mapToHSV(weather[0])
+    rgb.text(output, color, (0, 1))
+    
     #import valuestore
     #qq #Use this to keep showing current weather condition aftersunset
     try:
@@ -293,11 +300,6 @@ def refresh():
             condition(weather[4],23,0) #should implement dynamic postion depending on width of gif
         else:
             moonphase(weather[3],23,0)
-
-    output = "{}".format(weather[0])+"\u00B0" #adding degree sign, thanks Tom~
-    
-    color= mapToHSV(weather[0])
-    rgb.text(output, color, (0, 1))
 
     print("Mem free after gif:  ",gc.mem_free())
 
